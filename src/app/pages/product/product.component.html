@@ -1,0 +1,38 @@
+<app-shared-card>
+  <app-product-header />
+  <table class="table mt-5">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (product of products; track product.id) {
+      <tr>
+        <th scope="row">{{ product.id }}</th>
+        <td>{{ product.name }}</td>
+        <td>{{ product.price | currency }}</td>
+        <td>{{ product.quantity }}</td>
+        <td>
+          <i
+            [routerLink]="['/products', product.id, 'edit']"
+            class="text-info fs-3 mx-1 bi bi-pencil-square"
+          ></i>
+          <i
+            [routerLink]="['/products', product.id]"
+            class="text-warning fs-3 mx-1 bi bi-eye-fill"
+          ></i>
+          <i
+            (click)="deleteHandler(product.id)"
+            class="text-danger fs-3 mx-1 bi bi-trash3-fill"
+          ></i>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</app-shared-card>

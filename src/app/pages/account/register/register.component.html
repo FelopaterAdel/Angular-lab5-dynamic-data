@@ -1,0 +1,43 @@
+<div class="container d-flex justify-content-center align-items-center vh-100">
+<div class="card bg-dark text-white shadow p-4">
+  <h2 class="mb-4 text-center">Register</h2>
+  <form>
+    <div class="mb-3">
+      <label for="nameInput" class="form-label">Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="nameInput"
+        placeholder="Enter Your Name"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="emailInput" class="form-label">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        id="emailInput"
+        placeholder="Enter Your Email"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="passwordInput" class="form-label">Password</label>
+      <input
+        type="password"
+        class="form-control"
+        id="passwordInput"
+        placeholder="Enter Your Password"
+      />
+    </div>
+
+    <p class="lead">
+      Already have an account?
+      <a [routerLink]="['/account/login']" class="text-info">Login</a>
+    </p>
+
+    <button type="submit" class="btn btn-success d-block w-100">
+      Register
+    </button>
+  </form>
+</div>
+</div>
