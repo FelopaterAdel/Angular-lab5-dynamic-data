@@ -1,3 +1,4 @@
+import { IProduct } from './../../../models/IProduct';
 import { Component, OnInit } from '@angular/core';
 import { SharedCardComponent } from '../../../shared/shared-card/shared-card.component';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -9,7 +10,6 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { DynamicProductService } from '../../../services/dynamic-product.service';
-
 @Component({
   selector: 'app-product-form',
   imports: [CommonModule, SharedCardComponent, ReactiveFormsModule],
@@ -22,7 +22,7 @@ export class ProductFormComponent implements OnInit {
     private router: Router,
     private productService: DynamicProductService,
     private activatedRouted: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.activatedRouted.paramMap.subscribe({
@@ -44,11 +44,14 @@ export class ProductFormComponent implements OnInit {
     }
   }
   productForm = new FormGroup({
+    id: new FormControl('', [Validators.required]),
     name: new FormControl('', [Validators.required, Validators.minLength(3)]),
     price: new FormControl('', [Validators.required]),
     quantity: new FormControl('', [Validators.required]),
   });
-
+ get getId() {
+    return this.productForm.controls['id'];
+  }
   get getName() {
     return this.productForm.controls['name'];
   }
@@ -59,25 +62,32 @@ export class ProductFormComponent implements OnInit {
     return this.productForm.controls['quantity'];
   }
 
-  productHandler(e: Event) {
-    if (this.productForm.status == 'VALID') {
-      if (this.productId == 0) {
-        this.productService.addNewProduct(this.productForm.value).subscribe({
-          next: () => {
-            this.router.navigate(['/products']);
-          },
-        });
-      } else {
-        this.productService
-          .editProduct(this.productId, this.productForm.value)
-          .subscribe({
-            next: () => {
-              this.router.navigate(['/products']);
-            },
-          });
-      }
+ productHandler(e: Event) {
+  if (this.productForm.valid) {
+    const formValues = this.productForm.value;
+
+    const product: IProduct = {
+      id: String(formValues.id), 
+      name: formValues.name ?? '',
+      price: Number(formValues.price),
+      quantity: Number(formValues.quantity),
+    };
+
+    if (this.productId == 0) {
+      this.productService.addNewProduct(product).subscribe({
+        next: () => {
+          this.router.navigate(['/products']);
+        },
+      });
     } else {
-      console.log('Fix Errors');
+      this.productService.editProduct(this.productId, product).subscribe({
+        next: () => {
+          this.router.navigate(['/products']);
+        },
+      });
     }
+  } else {
+    console.log('Fix Errors');
   }
+}
 }

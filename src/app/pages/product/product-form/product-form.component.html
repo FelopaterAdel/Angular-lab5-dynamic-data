@@ -1,6 +1,6 @@
 <app-shared-card>
   <h2 class="text-muted text-center">Add New Product</h2>
-  <form  [formGroup]="productForm" (ngSubmit)="addProductHandler()">
+  <form  [formGroup]="productForm" (ngSubmit)="productHandler($event)">
    <div class="mb-3">
       <label for="id" class="form-label">Product ID</label>
       <input
@@ -49,10 +49,3 @@
     <button type="submit" class="btn btn-dark">Add New Product</button>
   </form>
 </app-shared-card>
-<!-- <form [formGroup]="productForm" (ngSubmit)="addProductHandler()">
-  <input type="text" formControlName="id" placeholder="ID" />
-  <input type="text" formControlName="name" placeholder="Name" />
-  <input type="number" formControlName="price" placeholder="Price" />
-  <input type="number" formControlName="quantity" placeholder="Quantity" />
-  <button type="submit">Add Product</button>
-</form> -->

@@ -5,7 +5,7 @@ import { ProductHeaderComponent } from "../../components/product-header/product-
 import { RouterLink } from '@angular/router';
 import { CurrencyPipe } from '@angular/common';
 import { DynamicProductService } from '../../services/dynamic-product.service';
-import { Subscribable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-product',
@@ -15,7 +15,7 @@ import { Subscribable, Subscription } from 'rxjs';
 })
 export class ProductsComponent implements OnInit, OnDestroy {
 products!:IProduct[];
-mySub1!: Subscription[];
+mySub1: Subscription[]=[];
 
 constructor(private ProductService:DynamicProductService){}
 
@@ -44,10 +44,6 @@ deleteHandler(productId: string) {
     this.mySub1.push(Y);
   }
   ngOnDestroy(): void {
-    for(let x=0;x<this.mySub1.length;x++){
-
-          this.mySub1[x].unsubscribe();
-
-    }
+    this.mySub1?.forEach(subscription => subscription?.unsubscribe());
   }
 }
